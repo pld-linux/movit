@@ -5,18 +5,17 @@
 Summary:	Modern Video Toolkit - high-quality, high-performance, open-source library for video filters
 Summary(pl.UTF-8):	Modern Video Toolkit - wysokiej jakości i wydajności, mające otwarte źródła biblioteka do filtrów obrazu
 Name:		movit
-Version:	1.5.1
+Version:	1.6.3
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://movit.sesse.net/%{name}-%{version}.tar.gz
-# Source0-md5:	d89dd8e6186d17932b310a654aa6eb24
+# Source0-md5:	401b4fb7b2b9cb17f5d1ec709e66ce2a
 URL:		https://movit.sesse.net/
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	SDL2_image-devel >= 2
 BuildRequires:	eigen3 >= 3
 BuildRequires:	fftw3-devel
-BuildRequires:	gtest-devel
 BuildRequires:	libepoxy-devel
 BuildRequires:	libpng-devel
 BuildRequires:	pkgconfig
@@ -71,7 +70,10 @@ Statyczna biblioteka Movit.
 %build
 %configure \
 	%{!?with_static_libs:--disable-static}
-%{__make}
+
+%{__make} libmovit.la demo \
+	with_benchmark=no \
+	with_coverage=no
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -92,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README
 %attr(755,root,root) %{_libdir}/libmovit.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmovit.so.6
+%attr(755,root,root) %ghost %{_libdir}/libmovit.so.8
 %{_datadir}/movit
 
 %files devel
